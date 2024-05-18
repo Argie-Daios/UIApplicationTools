@@ -7,6 +7,12 @@
     <Filter Include="src\Core">
       <UniqueIdentifier>{A5D31CCF-91A0-77DA-BAB9-6582A6E5AC68}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Items">
+      <UniqueIdentifier>{5E6326B3-CACD-DA29-130C-8CCF7FB5B87E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Math">
+      <UniqueIdentifier>{261422CF-12E1-7CDA-3BFA-6A822726B268}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Rendering">
       <UniqueIdentifier>{BA10DABB-26D1-55F2-EF0B-9F6F5B8B9ACE}</UniqueIdentifier>
     </Filter>
@@ -42,11 +48,26 @@
     <ClInclude Include="src\Core\Macros.h">
       <Filter>src\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Core\UIDefinitions.h">
+      <Filter>src\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Items\UIItem.h">
+      <Filter>src\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Items\UIElements.h">
+      <Filter>src\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Math\Structs.h">
+      <Filter>src\Math</Filter>
+    </ClInclude>
     <ClInclude Include="src\Rendering\Renderer.h">
       <Filter>src\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="src\Rendering\Window.h">
       <Filter>src\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tools\AssetManager.h">
+      <Filter>src\Tools</Filter>
     </ClInclude>
     <ClInclude Include="src\Tools\Input.h">
       <Filter>src\Tools</Filter>
@@ -1302,13 +1323,13 @@
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp">
       <Filter>vendor\glm\glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\Items\Item.h" />
-    <ClInclude Include="src\Math\Structs.h" />
-    <ClInclude Include="src\Items\UIElements.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">
       <Filter>src\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Items\UIElements.cpp">
+      <Filter>src\Items</Filter>
     </ClCompile>
     <ClCompile Include="src\Rendering\Renderer.cpp">
       <Filter>src\Rendering</Filter>
@@ -1316,9 +1337,13 @@
     <ClCompile Include="src\Rendering\Window.cpp">
       <Filter>src\Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="src\Tools\AssetManager.cpp">
+      <Filter>src\Tools</Filter>
+    </ClCompile>
     <ClCompile Include="src\Tools\Input.cpp">
       <Filter>src\Tools</Filter>
     </ClCompile>
-    <ClCompile Include="src\Items\UIElements.cpp" />
+    <ClCompile Include="src\Math\Structs.cpp" />
+    <ClCompile Include="src\Items\UIItem.cpp" />
   </ItemGroup>
 </Project>

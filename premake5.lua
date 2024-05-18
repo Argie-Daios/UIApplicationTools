@@ -79,16 +79,16 @@ project "UIApplicationTools"
 
 		defines
 		{
-			"UIA_WINDOWS"
+			"UIWINDOWS"
 		}
 
 	filter "configurations:Debug"
-		defines "UIA_DEBUG"
+		defines "UIDEBUG"
 		runtime "Debug"
 		symbols "On"
 
 	filter "configurations:Release"
-		defines "UIA_RELEASE"
+		defines "UIRELEASE"
 		runtime "Release"
 		optimize "On"
 
@@ -131,15 +131,15 @@ project "Application"
 
 		defines
 		{
-			"UIA_WINDOWS"
+			"UIWINDOWS"
 		}
 
 	filter "configurations:Debug"
-		defines "UIA_DEBUG"
+		defines "UIDEBUG"
 		runtime "Debug"
 		symbols "On"
 
 	filter "configurations:Release"
-		defines "UIA_RELEASE"
+		defines "UIRELEASE"
 		runtime "Release"
 		optimize "On"

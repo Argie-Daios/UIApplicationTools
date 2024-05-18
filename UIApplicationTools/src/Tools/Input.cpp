@@ -56,7 +56,7 @@ static SDL_Keycode ScancodeToKeycode(Key key)
 	case Key::NUM9: return SDLK_KP_9;
 	}
 
-	UIA_ASSERT(false, "There is no such key");
+	UIASSERT(false, "There is no such key");
 	return SDL_KeyCode();
 }
 
@@ -109,4 +109,9 @@ bool Input::DoesMouseHover(const SDL_Rect& rect)
 	glm::ivec2 mousePos = GetMousePosition();
 
 	return rect.x + rect.w > mousePos.x && rect.y + rect.h > mousePos.y && mousePos.x + 1 > rect.x && mousePos.y + 1 > rect.y;
+}
+
+int Input::PollEvent()
+{
+	return SDL_PollEvent(&s_Event);
 }

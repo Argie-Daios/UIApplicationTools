@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Macros.h"
+#include "UIDefinitions.h"
 #include "Rendering/Window.h"
 #include "Items/UIElements.h"
 
@@ -18,8 +19,9 @@ public:
 	static void Shutdown() { s_Instance->m_Running = false; }
 private:
 	static Application* s_Instance;
-	static std::shared_ptr<Window> s_Window;
+	static UIReferencePointer<Window> s_Window;
 	bool m_Running = true;
 
-	Image m_Image;
+	UIScopePointer<Image> m_Image;
+	UIScopePointer<Text> m_Text;
 };

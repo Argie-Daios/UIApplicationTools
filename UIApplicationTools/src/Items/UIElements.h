@@ -1,19 +1,35 @@
 #pragma once
 
-#include "Item.h"
+#include "UIItem.h"
 
-#include <string>
-
-class Image : public Item
+class Image : public UIItem
 {
 public:
 	Image();
-	Image(const glm::vec2& position);
-	Image(const glm::vec2& position, const std::string& texture_path);
+	Image(const Vector2f& position, const Vector2f& size, const ColorRGB& color);
+	Image(const Vector2f& position, const UIString& textureID, const Vector2f& size = Vector2f(-1, -1));
 	virtual ~Image() override;
 
 	virtual void Draw() override;
 private:
-	struct SDL_Texture* m_Texture;
-	Color m_Color;
+	UIString m_TextureID;
+	ColorRGB m_Color;
+};
+
+class Text : public UIItem
+{
+public:
+	Text();
+	Text(const Vector2f& position, const UIString& label, const UIString& fontID, const ColorRGB& color);
+	Text(const Text& text);
+	virtual ~Text() override;
+
+	virtual void Draw() override;
+private:
+	void RefreshTexture();
+private:
+	UIString m_Label;
+	UIScopePointer<struct UITexture> m_Texture;
+	UIString m_FontID;
+	ColorRGB m_Color;
 };

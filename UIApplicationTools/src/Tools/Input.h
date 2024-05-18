@@ -8,6 +8,7 @@
 
 struct SDL_Rect;
 
+// TODO: Clean this up make KeyCodes.h and MouseCodes.h with proper enum definitions
 enum class SDL_Scancodes
 {
     SDL_SCANCODE_UNKNOWN = 0,
@@ -460,6 +461,7 @@ public:
 	static bool DoesMouseHover(const SDL_Rect& rect);
 
 	static union SDL_Event& Event() { return s_Event; }
+    static int PollEvent();
 private:
 	static const Uint8* s_Keystates;
 	static SDL_Event s_Event;

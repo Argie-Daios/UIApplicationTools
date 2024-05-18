@@ -56,7 +56,7 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>UIA_WINDOWS;UIA_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>UIWINDOWS;UIDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;vendor\SDL2\include;vendor\SDL2_mixer\include;vendor\SDL_ttf\include;vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -76,7 +76,7 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>UIA_WINDOWS;UIA_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>UIWINDOWS;UIRELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;vendor\SDL2\include;vendor\SDL2_mixer\include;vendor\SDL_ttf\include;vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -99,11 +99,13 @@
   <ItemGroup>
     <ClInclude Include="src\Core\Application.h" />
     <ClInclude Include="src\Core\Macros.h" />
+    <ClInclude Include="src\Core\UIDefinitions.h" />
+    <ClInclude Include="src\Items\UIItem.h" />
     <ClInclude Include="src\Items\UIElements.h" />
-    <ClInclude Include="src\Items\Item.h" />
     <ClInclude Include="src\Math\Structs.h" />
     <ClInclude Include="src\Rendering\Renderer.h" />
     <ClInclude Include="src\Rendering\Window.h" />
+    <ClInclude Include="src\Tools\AssetManager.h" />
     <ClInclude Include="src\Tools\Input.h" />
     <ClInclude Include="src\UIApplicationTools.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
@@ -525,9 +527,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp" />
+    <ClCompile Include="src\Items\UIItem.cpp" />
     <ClCompile Include="src\Items\UIElements.cpp" />
+    <ClCompile Include="src\Math\Structs.cpp" />
     <ClCompile Include="src\Rendering\Renderer.cpp" />
     <ClCompile Include="src\Rendering\Window.cpp" />
+    <ClCompile Include="src\Tools\AssetManager.cpp" />
     <ClCompile Include="src\Tools\Input.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

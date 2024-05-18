@@ -3,8 +3,10 @@
 #include <iostream>
 #include <memory>
 
-#ifdef UIA_DEBUG
-	#define UIA_ASSERT(x, y) { if(!(x)) { std::cout << y << std::endl; __debugbreak(); } }
+#ifdef UIDEBUG
+	#define UIASSERT(x, y) { if(!(x)) { std::cout << y << std::endl; __debugbreak(); } }
+	#define UIERROR(x) { std::cout << "Error: " << x << std::endl; }
 #else
-	#define UIA_ASSERT(x, y) { if(!(x)) {} }
+	#define UIASSERT(x, y) { if(!(x)) {} }
+	#define UIERROR(x) { }
 #endif
