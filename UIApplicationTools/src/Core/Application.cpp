@@ -3,11 +3,18 @@
 #include "Rendering/Renderer.h"
 #include "Tools/AssetManager.h"
 #include "Tools/Input.h"
+#include "Macros.h"
+#include "Math/Positioner.h"
+#include "Time.h"
+#include "PerformanceManager.h"
 
 #include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_ttf.h>
+#include <algorithm>
 
 Application* Application::s_Instance = nullptr;
-std::shared_ptr<Window> Application::s_Window = nullptr;
+UIReferencePointer<Window> Application::s_Window = nullptr;
 
 Application::Application()
 {
@@ -18,12 +25,9 @@ Application::Application()
 
 	Renderer::Init(s_Window->Get());
 	AssetManager::Init();
+	Time::Init();
 
-	AssetManager::LoadTexture("ResidentEvil", "assets/RE.png");
-	AssetManager::LoadFont("Arial", "assets/ARIAL.TTF", 90);
-
-	m_Image = CreateUIScopePointer<Image>(Vector2f(100, 100), "ResidentEvil", Vector2f(700, 500));
-	m_Text = CreateUIScopePointer<Text>(Vector2f(900, 500), "Jill Valentine", "Arial", ColorRGB(0, 0, 255));
+	PerformanceManager::SetFPSCap(FPS_CAPS::FPS_60);
 }
 
 Application::~Application()
@@ -46,27 +50,121 @@ void Application::Event(SDL_Event* event)
 	}
 }
 
-void Application::Update()
+void Application::Begin()
 {
 
+}
+
+void Application::Update()
+{
+	GetCurrentScene()->ForEach([](UIItem* item) { 
+		if (UIWidget* casted = Cast<UIWidget*>(item))
+		{
+			casted->Update();
+		}
+	});
+	GetCurrentScene()->Update();
 }
 
 void Application::Draw()
 {
 	Renderer::Begin();
-	
-	m_Image->Draw();
-	m_Text->Draw();
+
+	GetCurrentScene()->ForEach([](UIItem* item) { item->Draw(); });
 
 	Renderer::End();
 }
 
 void Application::Run()
 {
+	for (auto& scene : m_Scenes) scene.second->Init();
+	Begin();
 	while (m_Running)
 	{
+		Time::Tick();
 		Event(&Input::Event());
 		Update();
 		Draw();
+		PerformanceManager::PerformCapping();
 	}
+}
+
+void Application::AddSceneOnSequencer(const UIString& name)
+{
+	UIASSERT(IsNameDuplicate(name), "Non-existing name for scene");
+	UIASSERT(std::find(m_SceneSequencer.begin(), m_SceneSequencer.end(), name)
+		== m_SceneSequencer.end(), "This scene is already sequenced!!");
+	m_SceneSequencer.push_back(name);
+}
+
+void Application::ChangeScene(const UIString& name)
+{
+	UIASSERT(IsNameDuplicate(name), "Non-existing name!!");
+	m_CurrentScene = m_Scenes.find(name);
+}
+
+void Application::ChangeScene(UIUnsignedInt index)
+{
+	UIASSERT(index < m_SceneSequencer.size(), "SceneSequencer overflow!!");
+	m_CurrentScene = m_Scenes.find(m_SceneSequencer.at(index));
+}
+
+void Application::NextScene()
+{
+	auto it = std::find(m_SceneSequencer.begin(), m_SceneSequencer.end(), m_CurrentScene->first);
+	UIASSERT(it != m_SceneSequencer.end(), "Current Scene not in sequencer");
+	it++;
+	if (it == m_SceneSequencer.end())
+	{
+		m_CurrentScene = m_Scenes.find(m_SceneSequencer.front());
+		return;
+	}
+	m_CurrentScene = m_Scenes.find(*it);
+}
+
+void Application::PreviousScene()
+{
+	auto it = std::find(m_SceneSequencer.begin(), m_SceneSequencer.end(), m_CurrentScene->first);
+	UIASSERT(it != m_SceneSequencer.end(), "Current Scene not in sequencer");
+	if (it == m_SceneSequencer.begin())
+	{
+		m_CurrentScene = m_Scenes.find(m_SceneSequencer.back());
+		return;
+	}
+	it--;
+	m_CurrentScene = m_Scenes.find(*it);
+}
+
+Scene* Application::GetCurrentScene()
+{
+	return m_CurrentScene->second.get();
+}
+
+void Application::PrintHirarchiesOnConsole()
+{
+	for (auto& scene : m_Scenes)
+	{
+		scene.second->PrintHierarchyOnConsole();
+	}
+}
+
+void Application::PrintHirarchiesOnStream(const UIString& filepath)
+{
+	for (auto& scene : m_Scenes) scene.second->PrintHierarchyOnFile(filepath);
+}
+
+Scene* Application::GetScene(const UIString& name)
+{
+	UIASSERT(IsNameDuplicate(name), "Non-existing name!!");
+	return m_Scenes.at(name).get();
+}
+
+bool Application::IsNameDuplicate(const UIString& name)
+{
+	for (auto& [key, value] : m_Scenes)
+	{
+		if (key == name) return true;
+	}
+
+	return false;
 }

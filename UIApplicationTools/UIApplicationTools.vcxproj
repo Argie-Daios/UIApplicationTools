@@ -98,15 +98,23 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Core\Application.h" />
+    <ClInclude Include="src\Core\EntryPoint.h" />
     <ClInclude Include="src\Core\Macros.h" />
+    <ClInclude Include="src\Core\PerformanceManager.h" />
+    <ClInclude Include="src\Core\Scene.h" />
+    <ClInclude Include="src\Core\Time.h" />
     <ClInclude Include="src\Core\UIDefinitions.h" />
     <ClInclude Include="src\Items\UIItem.h" />
     <ClInclude Include="src\Items\UIElements.h" />
+    <ClInclude Include="src\Math\Positioner.h" />
     <ClInclude Include="src\Math\Structs.h" />
     <ClInclude Include="src\Rendering\Renderer.h" />
     <ClInclude Include="src\Rendering\Window.h" />
     <ClInclude Include="src\Tools\AssetManager.h" />
     <ClInclude Include="src\Tools\Input.h" />
+    <ClInclude Include="src\Tools\KeyCodes.h" />
+    <ClInclude Include="src\Tools\Logger.h" />
+    <ClInclude Include="src\Tools\MouseCodes.h" />
     <ClInclude Include="src\UIApplicationTools.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\_features.hpp" />
@@ -527,13 +535,18 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp" />
+    <ClCompile Include="src\Core\PerformanceManager.cpp" />
+    <ClCompile Include="src\Core\Scene.cpp" />
+    <ClCompile Include="src\Core\Time.cpp" />
     <ClCompile Include="src\Items\UIItem.cpp" />
     <ClCompile Include="src\Items\UIElements.cpp" />
+    <ClCompile Include="src\Math\Positioner.cpp" />
     <ClCompile Include="src\Math\Structs.cpp" />
     <ClCompile Include="src\Rendering\Renderer.cpp" />
     <ClCompile Include="src\Rendering\Window.cpp" />
     <ClCompile Include="src\Tools\AssetManager.cpp" />
     <ClCompile Include="src\Tools\Input.cpp" />
+    <ClCompile Include="src\Tools\Logger.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

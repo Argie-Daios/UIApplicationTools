@@ -14,8 +14,9 @@ Window::Window(const std::string& title, int width, int height, int posX, int po
     UIASSERT(TTF_Init() != -1, "Failed to initialize the SDL2_ttf library");
 
     m_Window = SDL_CreateWindow(title.c_str(), posX, posY, width, height, flags);
-
     UIASSERT(m_Window, "Failed to create window");
+
+    InitializeCursors();
 }
 
 Window::~Window()
@@ -24,4 +25,21 @@ Window::~Window()
     TTF_Quit();
     IMG_Quit();
     SDL_Quit();
+}
+
+void Window::SetCursor(const UICursorType& cursorType)
+{
+    m_CursorType = cursorType;
+    SDL_SetCursor(s_Cursors.at(cursorType));
+}
+
+void Window::InitializeCursors()
+{
+    if (!s_Cursors.empty()) return;
+    for (UIInt i = 0; i <= NUMBER_OF_CURSORS; i++)
+    {
+        SDL_Cursor* cursor = SDL_CreateSystemCursor((SDL_SystemCursor)i);
+        UIASSERT(cursor, "Failed to load cursor!!");
+        s_Cursors.emplace((UICursorType)i, cursor);
+    }
 }

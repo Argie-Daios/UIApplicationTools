@@ -5,13 +5,15 @@
 #include <algorithm>
 
 UIItem::UIItem()
-	: m_Transform{ Vector2f(0, 0), 0.0f, Vector2f(1, 1) }, m_Size(-1, -1), m_Parent(nullptr)
+	: m_Transform{ Vector2f(0, 0), 0.0f, Vector2f(1, 1) }, m_Size(-1, -1), m_Parent(nullptr),
+	m_Active(true)
 {
 
 }
 
 UIItem::UIItem(const Vector2f& position, const Vector2f& size)
-	: m_Transform{ position, 0.0f, Vector2f(1, 1) }, m_Size(size), m_Parent(nullptr)
+	: m_Transform{ position, 0.0f, Vector2f(1, 1) }, m_Size(size), m_Parent(nullptr),
+	m_Active(true)
 {
 
 }
@@ -20,6 +22,48 @@ void UIItem::Attach(UIItem* parent)
 {
 	UIASSERT(parent, "Null parent!!");
 	parent->AddChild(this);
+}
+
+void UIItem::Translate(const Vector2f& deltaVector)
+{
+	m_Transform.position += deltaVector;
+
+	for (auto& element : m_Children)
+	{
+		element->Translate(deltaVector);
+	}
+}
+
+void UIItem::SetPosition(const Vector2f& positionVector)
+{
+	Vector2f prevPosition = m_Transform.position;
+	m_Transform.position = positionVector;
+
+	for (auto& element : m_Children)
+	{
+		Vector2f childNewPos = element->m_Transform.position - prevPosition;
+		element->SetPosition(positionVector + childNewPos);
+	}
+}
+
+void UIItem::Rotate(UIFloat degrees)
+{
+	m_Transform.rotation.Rotate(degrees);
+
+	for (auto& element : m_Children)
+	{
+		element->Rotate(degrees);
+	}
+}
+
+void UIItem::SetActive(bool active)
+{
+	m_Active = active;
+
+	for (auto& element : m_Children)
+	{
+		element->SetActive(active);
+	}
 }
 
 void UIItem::AddChild(UIItem* child)
@@ -38,7 +82,9 @@ void UIItem::AddChild(UIItem* child)
 
 	if (child->m_Parent)
 	{
-		m_Parent->m_Children.erase(std::find(m_Parent->m_Children.begin(), m_Parent->m_Children.end(), child));
+		child->m_Parent->m_Children.erase(
+			std::find(child->m_Parent->m_Children.begin(),
+				child->m_Parent->m_Children.end(), child));
 	}
 
 	child->m_Parent = this;
@@ -70,14 +116,11 @@ bool UIItem::IsSuccessorOfRecursive(UIItem* current, UIItem* subject)
 	if (current == subject) return true;
 
 	auto& children = current->m_Children;
-	while (!children.empty())
+	for (int i = 0; i < children.size(); i++)
 	{
-		for (int i = 0; i < children.size(); i++)
-		{
-			bool result = IsSuccessorOfRecursive(children.at(i), subject);
-			if (result) return true;
-			if (i == children.size() - 1) return false;
-		}
+		bool result = IsSuccessorOfRecursive(children.at(i), subject);
+		if (result) return true;
+		if (i == children.size() - 1) return false;
 	}
 
 	return false;

@@ -46,6 +46,7 @@ UITexture* AssetManager::LoadTexture(const UIString& name, const UIString& filep
 	UITexture* uiTexture = new UITexture;
 	UIASSERT(uiTexture, "Malloc failure!!");
 	uiTexture->Texture = texture;
+	SDL_QueryTexture(texture, 0, 0, &uiTexture->Width, &uiTexture->Height);
 	s_Textures.emplace(name, uiTexture);
 	SDL_FreeSurface(surface);
 

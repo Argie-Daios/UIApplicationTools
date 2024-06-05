@@ -54,6 +54,7 @@ static SDL_Keycode ScancodeToKeycode(Key key)
 	case Key::NUM7: return SDLK_KP_7;
 	case Key::NUM8: return SDLK_KP_8;
 	case Key::NUM9: return SDLK_KP_9;
+	case Key::LCTRL: return SDLK_LCTRL;
 	}
 
 	UIASSERT(false, "There is no such key");
@@ -66,11 +67,15 @@ bool Input::IsKeyPressed(Key key)
 		s_Keystates = SDL_GetKeyboardState(NULL);
 
 	return s_Keystates[(SDL_Scancode)key];
+	
 }
 
 bool Input::IsKeyDown(Key key)
 {
-	return s_Event.type == SDL_KEYDOWN && s_Event.key.repeat == 0 && s_Event.key.keysym.sym == ScancodeToKeycode(key);
+	if (!s_Keystates)
+		s_Keystates = SDL_GetKeyboardState(NULL);
+
+	return s_Event.type == SDL_KEYDOWN && s_Event.key.repeat == 0 && s_Keystates[(SDL_Scancode)key];
 }
 
 

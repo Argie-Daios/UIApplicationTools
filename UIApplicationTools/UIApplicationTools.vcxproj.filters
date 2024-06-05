@@ -1323,6 +1323,14 @@
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp">
       <Filter>vendor\glm\glm</Filter>
     </ClInclude>
+    <ClInclude Include="src\Core\Scene.h" />
+    <ClInclude Include="src\Math\Positioner.h" />
+    <ClInclude Include="src\Core\Time.h" />
+    <ClInclude Include="src\Core\PerformanceManager.h" />
+    <ClInclude Include="src\Core\EntryPoint.h" />
+    <ClInclude Include="src\Tools\KeyCodes.h" />
+    <ClInclude Include="src\Tools\MouseCodes.h" />
+    <ClInclude Include="src\Tools\Logger.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">
@@ -1345,5 +1353,10 @@
     </ClCompile>
     <ClCompile Include="src\Math\Structs.cpp" />
     <ClCompile Include="src\Items\UIItem.cpp" />
+    <ClCompile Include="src\Core\Scene.cpp" />
+    <ClCompile Include="src\Math\Positioner.cpp" />
+    <ClCompile Include="src\Core\Time.cpp" />
+    <ClCompile Include="src\Core\PerformanceManager.cpp" />
+    <ClCompile Include="src\Tools\Logger.cpp" />
   </ItemGroup>
 </Project>

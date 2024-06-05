@@ -29,7 +29,9 @@ public:
 	/// </summary>
 	static void End();
 
-	static void DrawQuad(const Transform& transform, const Vector2f& size, const ColorRGB& color);
+	static void DrawRect(const Transform& transform, const Vector2f& size, const ColorRGBA& color,
+		UIUnsignedInt thickness);
+	static void DrawQuad(const Transform& transform, const Vector2f& size, const ColorRGBA& color);
 	static void DrawTexture(const Transform& transform, const UIString& textureID, const Vector2f& size = Vector2f(-1, -1));
 	static void DrawTexture(const Transform& transform, struct UITexture* texture, const Vector2f& size = Vector2f(-1, -1));
 

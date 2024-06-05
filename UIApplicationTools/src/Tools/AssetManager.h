@@ -13,6 +13,8 @@ enum class UIAssetType : UIUnsignedByte
 struct UITexture
 {
 	struct SDL_Texture* Texture;
+	UIInt Width;
+	UIInt Height;
 };
 
 typedef struct _TTF_Font TTF_Font;

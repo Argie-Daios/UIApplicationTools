@@ -91,12 +91,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\MainMenu.cpp" />
+    <ClCompile Include="src\MyApplication.cpp" />
+    <ClCompile Include="src\MyApplication.h" />
+    <ClCompile Include="src\StartingScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\UIApplicationTools\UIApplicationTools.vcxproj">
       <Project>{E8796882-D45D-29D8-3DBE-232B29C1135A}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\MainMenu.h" />
+    <ClInclude Include="src\StartingScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
