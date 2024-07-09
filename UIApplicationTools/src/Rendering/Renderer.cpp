@@ -3,6 +3,7 @@
 #include "Window.h"
 #include "Tools/AssetManager.h"
 #include "Core/Macros.h"
+#include "Math/Functions.h"
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -38,7 +39,7 @@ void Renderer::DrawRect(const Transform& transform, const Vector2f& size, const 
 	rect.y = (UIInt)transform.position.Y();
 	rect.w = (UIInt)size.X();
 	rect.h = (UIInt)size.Y();
-
+	
 	Uint8 tempR, tempG, tempB, tempA;
 	SDL_GetRenderDrawColor(s_Renderer, &tempR, &tempG, &tempB, &tempA);
 	SDL_SetRenderDrawColor(s_Renderer, color.r, color.g, color.b, color.a);
@@ -71,12 +72,19 @@ void Renderer::DrawQuad(const Transform& transform, const Vector2f& size, const 
 	SDL_SetRenderDrawColor(s_Renderer, tempR, tempG, tempB, tempA);
 }
 
-void Renderer::DrawTexture(const Transform& transform, const UIString& textureID, const Vector2f& size)
+void Renderer::DrawTexture(const Transform& transform, const UIString& textureID, const ColorRGBA& color,
+	const Vector2f& size)
+{
+	UITexture* texture = AssetManager::ReceiveTexture(textureID);
+	DrawTexture(transform, texture, color, size);
+}
+
+void Renderer::DrawTexture(const Transform& transform, UITexture* texture, const ColorRGBA& color, 
+	const Vector2f& size)
 {
 	SDL_Rect src, dst;
 
 	int texWidth, texHeight;
-	UITexture* texture = AssetManager::ReceiveTexture(textureID);
 	SDL_QueryTexture(texture->Texture, 0, 0, &texWidth, &texHeight);
 
 	src.x = 0;
@@ -86,30 +94,14 @@ void Renderer::DrawTexture(const Transform& transform, const UIString& textureID
 
 	src.w = texWidth;
 	src.h = texHeight;
+
+	//Vector2f initialSize = UIMath::Rotate(size, -transform.rotation.Degrees);
 	dst.w = (UIInt)size.X();
 	dst.h = (UIInt)size.Y();
 	
-	SDL_RenderCopyEx(s_Renderer, texture->Texture, &src, &dst, 0, nullptr, SDL_FLIP_NONE);
-}
-
-void Renderer::DrawTexture(const Transform& transform, UITexture* texture, const Vector2f& size)
-{
-	SDL_Rect src, dst;
-
-	int texWidth, texHeight;
-	SDL_QueryTexture(texture->Texture, 0, 0, &texWidth, &texHeight);
-
-	src.x = 0;
-	src.y = 0;
-	dst.x = (UIInt)transform.position.X();
-	dst.y = (UIInt)transform.position.Y();
-
-	src.w = texWidth;
-	src.h = texHeight;
-	dst.w = (UIInt)size.X();
-	dst.h = (UIInt)size.Y();
-
-	SDL_RenderCopyEx(s_Renderer, texture->Texture, &src, &dst, 0, nullptr, SDL_FLIP_NONE);
+	SDL_SetTextureAlphaMod(texture->Texture, color.a);
+	SDL_RenderCopyEx(s_Renderer, texture->Texture, &src, &dst, transform.rotation.Degrees, nullptr, SDL_FLIP_NONE);
+	SDL_SetTextureAlphaMod(texture->Texture, 255);
 }
 
 SDL_Texture* Renderer::CreateTextureFromSurface(SDL_Surface* surface)

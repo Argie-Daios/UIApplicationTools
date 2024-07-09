@@ -12,8 +12,6 @@ public:
 	virtual void Init() override;
 	virtual void Update() override;
 private:
-	UIInputBox* m_InputBox;
-	UIInputBox* m_InputBox2;
 	UIButton* m_EnterButton;
 	UIButton* m_BackButton;
 	UIButton* m_TestButton;

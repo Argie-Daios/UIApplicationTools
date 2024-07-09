@@ -147,7 +147,6 @@ struct ColorRGB
 	UIUnsignedByte g;
 	UIUnsignedByte b;
 
-	ColorRGB() = default;
 	ColorRGB(UIUnsignedByte r = 255, UIUnsignedByte g = 255, UIUnsignedByte b = 255) : r(r), g(g), b(b) {}
 	ColorRGB(const ColorRGB& colorRGB) : r(colorRGB.r), g(colorRGB.g), b(colorRGB.b) {}
 
@@ -161,7 +160,6 @@ struct ColorRGBA
 	UIUnsignedByte b;
 	UIUnsignedByte a;
 
-	ColorRGBA() = default;
 	ColorRGBA(UIUnsignedByte r = 255, UIUnsignedByte g = 255, UIUnsignedByte b = 255,
 		UIUnsignedByte a = 255) : r(r), g(g), b(b), a(a)
 	{}

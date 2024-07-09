@@ -1,19 +1,21 @@
 #include "UIItem.h"
 
 #include "Core/Macros.h"
+#include "Math/Functions.h"
+#include "Tools/AssetManager.h"
 
 #include <algorithm>
 
 UIItem::UIItem()
-	: m_Transform{ Vector2f(0, 0), 0.0f, Vector2f(1, 1) }, m_Size(-1, -1), m_Parent(nullptr),
+	: m_Transform{ Vector2f(0, 0), 0.0f, Vector2f(1, 1) }, m_DepthValue(0.0f), m_Size(-1, -1), m_Parent(nullptr),
 	m_Active(true)
 {
 
 }
 
-UIItem::UIItem(const Vector2f& position, const Vector2f& size)
-	: m_Transform{ position, 0.0f, Vector2f(1, 1) }, m_Size(size), m_Parent(nullptr),
-	m_Active(true)
+UIItem::UIItem(const Vector2f& position, const Vector2f& size, const UIMesh& mesh)
+	: m_Transform{ position, 0.0f, Vector2f(1, 1) }, m_DepthValue(0.0f), m_Size(size), m_Parent(nullptr),
+	m_Active(true), m_Mesh(mesh)
 {
 
 }
@@ -22,6 +24,32 @@ void UIItem::Attach(UIItem* parent)
 {
 	UIASSERT(parent, "Null parent!!");
 	parent->AddChild(this);
+}
+
+void UIItem::DettachChildren()
+{
+	for (auto& child : m_Children)
+	{
+		child->m_Parent = nullptr;
+	}
+	m_Children.clear();
+}
+
+void UIItem::Dettach()
+{
+	if (m_Parent)
+	{
+		m_Parent->m_Children.erase(std::find(m_Parent->m_Children.begin(), m_Parent->m_Children.end(), this));
+	}
+}
+
+void UIItem::ForEachOnFamilyTree(const std::function<void(UIItem* item)>& function)
+{
+	for (auto& child : m_Children)
+	{
+		function(child);
+		child->ForEachOnFamilyTree(function);
+	}
 }
 
 void UIItem::Translate(const Vector2f& deltaVector)
@@ -124,6 +152,11 @@ bool UIItem::IsSuccessorOfRecursive(UIItem* current, UIItem* subject)
 	}
 
 	return false;
+}
+
+void UIItem::AddMesh(const UIMesh& mesh)
+{
+	m_Mesh = mesh;
 }
 
 bool UIItem::IsSuccessorOf(UIItem* subject)

@@ -1,3 +1,5 @@
+#pragma once
+
 #include <UIApplicationTools.h>
 
 class MyApplication : public Application

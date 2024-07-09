@@ -3,6 +3,7 @@
 #include "Core/EntryPoint.h"
 #include "MainMenu.h"
 #include "StartingScene.h"
+#include "Core/EntryPoint.h"
 
 Application* CreateApplication(int argc, char** argv)
 {

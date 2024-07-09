@@ -4,12 +4,6 @@
 
 #include <functional>
 
-enum class UIButtonType : UIUnsignedByte
-{
-	UIImage,
-	UIText
-};
-
 enum class UIButtonMode : UIUnsignedByte
 {
 	UINormal,
@@ -28,7 +22,6 @@ public:
 
 	virtual void Draw() override;
 private:
-	ColorRGBA m_Color;
 	UIUnsignedInt m_Thickness;
 };
 
@@ -42,14 +35,7 @@ public:
 	UIImage(const UIImage& image) = default;
 	virtual ~UIImage() override;
 
-	inline UIString GetTextureID() const { return m_TextureID; }
-	inline void SetColor(const ColorRGBA& color) { m_Color = color; }
-	inline ColorRGBA GetColor() const { return m_Color; }
-
 	virtual void Draw() override;
-private:
-	UIString m_TextureID;
-	ColorRGBA m_Color;
 };
 
 class UIText : public UIItem
@@ -60,28 +46,30 @@ public:
 	UIText(const UIText& text);
 	virtual ~UIText() override;
 
-	void SetColor(const ColorRGBA& color);
+	virtual void SetColor(const ColorRGBA& color) override;
 	void SetLabel(const UIString& label);
 	inline UIString GetLabel() const { return m_Label; }
 	UIInt GetWidth() const;
 	UIInt GetHeight() const;
+	ColorRGBA GetColor() const { return m_Mesh.Color; }
 
 	virtual void Draw() override;
 private:
 	void RefreshTexture();
 private:
 	UIString m_Label;
-	UIScopePointer<struct UITexture> m_Texture;
 	UIString m_FontID;
-	ColorRGBA m_Color;
 };
 
 class UIButton : public UIWidget
 {
 public:
 	UIButton();
-	UIButton(UIItem* item, const UIButtonType& type);
-	UIButton(const Vector2f& position, UIItem* item, const UIButtonType& type);
+	UIButton(const Vector2f& position, const Vector2f& size, const UIString& label,
+		const ColorRGBA& textColor, const ColorRGBA& backgroundColor);
+	UIButton(const Vector2f& position, const Vector2f& size, const UIString& label, const ColorRGBA& textColor);
+	UIButton(UIItem* item);
+	UIButton(const Vector2f& position, UIItem* item);
 	UIButton(const UIButton& button) = delete;
 	virtual ~UIButton() override;
 
@@ -110,6 +98,8 @@ public:
 
 	virtual void Update() override;
 	virtual void Draw() override;
+protected:
+	void SetItem(UIItem* item);
 private:
 	enum class UIButtonState : UIUnsignedByte
 	{
@@ -129,7 +119,7 @@ private:
 	ColorRGBA m_ActiveColor;
 	UIButtonMode m_Mode;
 	UIButtonState m_State;
-	UIButtonType m_Type;
+	UIBool m_HandleDraw;
 
 	std::function<void(UIButton* self)> OnExitHover;
 	std::function<void(UIButton* self)> OnHover;
@@ -137,23 +127,14 @@ private:
 	std::function<void(UIButton* self)> OnRelease;
 };
 
-class UIInputBox : public UIWidget
+class UILayerMask : public UIBox
 {
 public:
-	UIInputBox();
-	UIInputBox(const Vector2f& position, const Vector2f& size);
-	virtual ~UIInputBox() override;
+	UILayerMask();
+	UILayerMask(const Vector2f& position, const Vector2f& size, const ColorRGBA& color = ColorRGBA(255, 255, 255),
+		UIBool visible = true, UIUnsignedInt thickness = 3);
+	UILayerMask(const UILayerMask& box) = default;
+	virtual ~UILayerMask() override;
 
 	virtual void Draw() override;
-	virtual void Update() override;
-
-	void Clear();
-private:
-	UIScopePointer<UIImage> m_Box;
-	UIScopePointer<UIText> m_Text;
-	UIScopePointer<UIButton> m_Button;
-	UIBool m_Active;
-	UIBool m_CursorActive;
-	UIBool m_Hovered = false;
-	UIString m_TextString;
 };

@@ -1,0 +1,51 @@
+project "#projectName"
+	location "#projectName"
+	kind "ConsoleApp"
+	language "C++"
+	cppdialect "C++17"
+	staticruntime "off"
+
+	targetdir  ("bin/" .. outputdir .. "/%{prj.name}")
+	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+
+	files
+	{
+		"%{prj.name}/src/**.h",
+		"%{prj.name}/src/**.cpp"
+	}
+
+	includedirs
+	{
+		"UIApplicationTools/src",
+		"%{prj.name}/src",
+		"%{IncludeDir.glm}"
+	}
+
+	links
+    {
+        "UIApplicationTools",
+		"libfreetype-6.dll",
+		"SDL2.dll",
+		"SDL2_image.dll",
+		"SDL2_mixer.dll",
+		"SDL2_ttf.dll",
+		"zlib1.dll"
+    }
+
+	filter "system:windows"
+		systemversion "latest"
+
+		defines
+		{
+			"UIWINDOWS"
+		}
+
+	filter "configurations:Debug"
+		defines "UIDEBUG"
+		runtime "Debug"
+		symbols "On"
+
+	filter "configurations:Release"
+		defines "UIRELEASE"
+		runtime "Release"
+		optimize "On"

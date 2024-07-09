@@ -1,7 +1,5 @@
 #pragma once
 
-using UIInt = int;
-using UIFloat = float;
 using UIUnsignedInt = unsigned int;
 
 enum class FPS_CAPS : UIUnsignedInt

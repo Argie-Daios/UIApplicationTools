@@ -1,6 +1,6 @@
 workspace "UIApplicationTools"
 	architecture "x64"
-	startproject "Application"
+	startproject "TicTacToe"
 
 	configurations
 	{
@@ -66,12 +66,6 @@ project "UIApplicationTools"
 		"SDL2_image.lib",
 		"SDL2_mixer.lib",
 		"SDL2_ttf.lib",
-		"libfreetype-6.dll",
-		"SDL2.dll",
-		"SDL2_image.dll",
-		"SDL2_mixer.dll",
-		"SDL2_ttf.dll",
-		"zlib1.dll"
 	}
 
 	filter "system:windows"
@@ -117,13 +111,53 @@ project "Application"
 
 	links
     {
-        "UIApplicationTools",
-		"libfreetype-6.dll",
-		"SDL2.dll",
-		"SDL2_image.dll",
-		"SDL2_mixer.dll",
-		"SDL2_ttf.dll",
-		"zlib1.dll"
+        "UIApplicationTools"
+    }
+
+	filter "system:windows"
+		systemversion "latest"
+
+		defines
+		{
+			"UIWINDOWS"
+		}
+
+	filter "configurations:Debug"
+		defines "UIDEBUG"
+		runtime "Debug"
+		symbols "On"
+
+	filter "configurations:Release"
+		defines "UIRELEASE"
+		runtime "Release"
+		optimize "On"
+
+project "TicTacToe"
+	location "TicTacToe"
+	kind "ConsoleApp"
+	language "C++"
+	cppdialect "C++17"
+	staticruntime "off"
+
+	targetdir  ("bin/" .. outputdir .. "/%{prj.name}")
+	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+
+	files
+	{
+		"%{prj.name}/src/**.h",
+		"%{prj.name}/src/**.cpp"
+	}
+
+	includedirs
+	{
+		"UIApplicationTools/src",
+		"%{prj.name}/src",
+		"%{IncludeDir.glm}"
+	}
+
+	links
+    {
+        "UIApplicationTools"
     }
 
 	filter "system:windows"

@@ -45,17 +45,35 @@
     <ClInclude Include="src\Core\Application.h">
       <Filter>src\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Core\EntryPoint.h">
+      <Filter>src\Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\Core\Macros.h">
+      <Filter>src\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\PerformanceManager.h">
+      <Filter>src\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Scene.h">
+      <Filter>src\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Time.h">
       <Filter>src\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\UIDefinitions.h">
       <Filter>src\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Items\UIElements.h">
+      <Filter>src\Items</Filter>
+    </ClInclude>
     <ClInclude Include="src\Items\UIItem.h">
       <Filter>src\Items</Filter>
     </ClInclude>
-    <ClInclude Include="src\Items\UIElements.h">
-      <Filter>src\Items</Filter>
+    <ClInclude Include="src\Math\Functions.h">
+      <Filter>src\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Math\Positioner.h">
+      <Filter>src\Math</Filter>
     </ClInclude>
     <ClInclude Include="src\Math\Structs.h">
       <Filter>src\Math</Filter>
@@ -70,6 +88,18 @@
       <Filter>src\Tools</Filter>
     </ClInclude>
     <ClInclude Include="src\Tools\Input.h">
+      <Filter>src\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tools\KeyCodes.h">
+      <Filter>src\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tools\Logger.h">
+      <Filter>src\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tools\MouseCodes.h">
+      <Filter>src\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tools\Random.h">
       <Filter>src\Tools</Filter>
     </ClInclude>
     <ClInclude Include="src\UIApplicationTools.h">
@@ -1323,21 +1353,31 @@
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp">
       <Filter>vendor\glm\glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\Scene.h" />
-    <ClInclude Include="src\Math\Positioner.h" />
-    <ClInclude Include="src\Core\Time.h" />
-    <ClInclude Include="src\Core\PerformanceManager.h" />
-    <ClInclude Include="src\Core\EntryPoint.h" />
-    <ClInclude Include="src\Tools\KeyCodes.h" />
-    <ClInclude Include="src\Tools\MouseCodes.h" />
-    <ClInclude Include="src\Tools\Logger.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">
       <Filter>src\Core</Filter>
     </ClCompile>
+    <ClCompile Include="src\Core\PerformanceManager.cpp">
+      <Filter>src\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Scene.cpp">
+      <Filter>src\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Time.cpp">
+      <Filter>src\Core</Filter>
+    </ClCompile>
     <ClCompile Include="src\Items\UIElements.cpp">
       <Filter>src\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Items\UIItem.cpp">
+      <Filter>src\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Math\Positioner.cpp">
+      <Filter>src\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Math\Structs.cpp">
+      <Filter>src\Math</Filter>
     </ClCompile>
     <ClCompile Include="src\Rendering\Renderer.cpp">
       <Filter>src\Rendering</Filter>
@@ -1351,12 +1391,11 @@
     <ClCompile Include="src\Tools\Input.cpp">
       <Filter>src\Tools</Filter>
     </ClCompile>
-    <ClCompile Include="src\Math\Structs.cpp" />
-    <ClCompile Include="src\Items\UIItem.cpp" />
-    <ClCompile Include="src\Core\Scene.cpp" />
-    <ClCompile Include="src\Math\Positioner.cpp" />
-    <ClCompile Include="src\Core\Time.cpp" />
-    <ClCompile Include="src\Core\PerformanceManager.cpp" />
-    <ClCompile Include="src\Tools\Logger.cpp" />
+    <ClCompile Include="src\Tools\Logger.cpp">
+      <Filter>src\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tools\Random.cpp">
+      <Filter>src\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

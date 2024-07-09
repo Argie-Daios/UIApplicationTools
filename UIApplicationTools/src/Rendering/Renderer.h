@@ -32,8 +32,12 @@ public:
 	static void DrawRect(const Transform& transform, const Vector2f& size, const ColorRGBA& color,
 		UIUnsignedInt thickness);
 	static void DrawQuad(const Transform& transform, const Vector2f& size, const ColorRGBA& color);
-	static void DrawTexture(const Transform& transform, const UIString& textureID, const Vector2f& size = Vector2f(-1, -1));
-	static void DrawTexture(const Transform& transform, struct UITexture* texture, const Vector2f& size = Vector2f(-1, -1));
+	static void DrawTexture(const Transform& transform, const UIString& textureID,
+		const ColorRGBA& color = ColorRGBA(255, 255, 255, 255),
+		const Vector2f& size = Vector2f(-1, -1));
+	static void DrawTexture(const Transform& transform, struct UITexture* texture,
+		const ColorRGBA& color = ColorRGBA(255, 255, 255, 255),
+		const Vector2f& size = Vector2f(-1, -1));
 
 	static SDL_Texture* CreateTextureFromSurface(struct SDL_Surface* surface);
 private:

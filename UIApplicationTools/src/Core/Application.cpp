@@ -63,14 +63,31 @@ void Application::Update()
 			casted->Update();
 		}
 	});
+	GetCurrentScene()->ForEach([&](UIItem* item) {
+		if (item->isDepthValueChanged())
+		{
+			GetCurrentScene()->ResortItem(item);
+			item->SetChangedDepthValue(false);
+		}
+	});
 	GetCurrentScene()->Update();
+	if (!m_DeletionQueue.empty())
+	{
+		for (auto& element : m_DeletionQueue)
+		{
+			m_Scenes.erase(element);
+			auto& it = std::find(m_SceneSequencer.begin(), m_SceneSequencer.end(), element);
+			if(it != m_SceneSequencer.end()) m_SceneSequencer.erase(it);
+		}
+		m_DeletionQueue.clear();
+	}
 }
 
 void Application::Draw()
 {
 	Renderer::Begin();
 
-	GetCurrentScene()->ForEach([](UIItem* item) { item->Draw(); });
+	GetCurrentScene()->ForEachInPriority([](UIItem* item) { item->Draw(); });
 
 	Renderer::End();
 }
@@ -87,6 +104,14 @@ void Application::Run()
 		Draw();
 		PerformanceManager::PerformCapping();
 	}
+}
+
+void Application::RemoveScene(const UIString& name)
+{
+	UIASSERT(IsNameDuplicate(name), "Non-existing name for scene");
+	UIASSERT(m_CurrentScene->first != name, "Can't remove current scene");
+
+	m_DeletionQueue.push_back(name);
 }
 
 void Application::AddSceneOnSequencer(const UIString& name)
@@ -138,6 +163,11 @@ void Application::PreviousScene()
 Scene* Application::GetCurrentScene()
 {
 	return m_CurrentScene->second.get();
+}
+
+void Application::Delay(float seconds)
+{
+	SDL_Delay((int)(seconds * 1000.0f));
 }
 
 void Application::PrintHirarchiesOnConsole()

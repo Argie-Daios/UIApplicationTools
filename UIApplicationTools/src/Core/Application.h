@@ -23,21 +23,28 @@ public:
 	inline static Window* GetWindow() { return s_Window.get(); }
 
 	template<typename T>
-	void AddScene(const UIString& name)
+	Scene* AddScene(const UIString& name)
 	{
+		// TODO: I may need to Init the scene here!!
 		UIASSERT(!IsNameDuplicate(name), "Duplicate name!!");
-		m_Scenes.emplace(name, CreateUIReferencePointer<T>(name));
+		auto ref = CreateUIReferencePointer<T>(name);
+		m_Scenes.emplace(name, ref);
 		if (m_Scenes.size() == 1)
 		{
 			m_CurrentScene = m_Scenes.begin();
 		}
+		return ref.get();
 	}
+	void RemoveScene(const UIString& name);
 	void AddSceneOnSequencer(const UIString& name);
 	void ChangeScene(const UIString& name);
 	void ChangeScene(UIUnsignedInt index);
 	void NextScene();
 	void PreviousScene();
 	Scene* GetCurrentScene();
+
+	// TODO : Remove it
+	void Delay(float seconds);
 protected:
 	void PrintHirarchiesOnConsole();
 	void PrintHirarchiesOnStream(const UIString& filepath);
@@ -52,9 +59,10 @@ private:
 	UIItem* m_InputBox = nullptr;
 
 	// Maybe need change from iterator to Scene* or UIReferencedPointer<Scene>, no need to store an iterator
-	UIHashMap<UIString, UIReferencePointer<Scene>>::iterator m_CurrentScene;
+	UIHashMap<UIString, UIReferencePointer<Scene>>::iterator m_CurrentScene; // DANGEROUS!!
 	UIHashMap<UIString, UIReferencePointer<Scene>> m_Scenes;
 	UIVector<UIString> m_SceneSequencer;
+	UIVector<UIString> m_DeletionQueue;
 };
 
 Application* CreateApplication(int argc, char** argv);

@@ -1,8 +1,12 @@
 #include "PerformanceManager.h"
 
-#include <iostream>
 #include "Time.h"
+
+#include <iostream>
 #include <SDL.h>
+
+using UIInt = int;
+using UIFloat = float;
 
 FPS_CAPS PerformanceManager::m_FPSCap = FPS_CAPS::FPS_UNCAPPED;
 
